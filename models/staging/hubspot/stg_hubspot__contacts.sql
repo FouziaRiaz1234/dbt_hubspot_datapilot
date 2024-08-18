@@ -17,9 +17,10 @@ WITH source_data AS
     properties_industry AS industry,
     properties_jobtitle AS job_title,
     properties_lastmodifieddate AS last_modified_at,
-    properties_phone,
+    properties_phone AS phone,
     properties_total_revenue AS total_revenue
   FROM `datapilot-datadrivenmarketing`.`hubspot_tables`.`contacts_table`
+  WHERE properties_hs_marketable_status = 'true'
 )
 
 SELECT * FROM source_data
