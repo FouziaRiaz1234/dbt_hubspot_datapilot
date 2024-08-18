@@ -1,0 +1,12 @@
+WITH source_data AS
+(
+    SELECT DISTINCT
+    CAST(campaign_id AS STRING) AS campaign_id,
+    content_id,	
+    subject	AS campaign_subject,
+    campaign_name,
+    type AS campaign_type
+ FROM `datapilot-datadrivenmarketing`.`hubspot_tables`.`campaigns_table`)
+
+ SELECT * from source_data
+ 

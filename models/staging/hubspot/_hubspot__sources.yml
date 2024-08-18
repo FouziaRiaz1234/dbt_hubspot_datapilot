@@ -14,3 +14,4 @@ sources:
       - name: contacts_table
       - name: contacts_with_list_membership_table
       - name: delivered_event_table
+      - name: marketing_email_table
