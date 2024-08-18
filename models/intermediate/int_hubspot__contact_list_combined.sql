@@ -1,4 +1,4 @@
-ITH contact_data AS (
+WITH contact_data AS (
     SELECT
         contact_id,
         full_name,
