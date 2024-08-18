@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: hubspot_datapilot
     database: datapilot-datadrivenmarketing
-    schema: dbt_hubspot_datapilot
+    schema: dbt_hubspot_dp
     tables:
       - name: all_events_table
       - name: bounce_event_table
