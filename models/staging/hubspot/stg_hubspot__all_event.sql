@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 WITH aggregated_events AS (
     SELECT 
         recipient,
@@ -8,7 +7,7 @@ WITH aggregated_events AS (
         MAX(obsoletedBy_id) AS obsoletedBy_id,
         MAX(emailCampaignId) AS campaign_id,
         MAX(`from`) AS from_name,
-        MAX(created) AS created_at, --- Take the maximum creation timestamp for the grouped events
+        MAX(created) AS created_at,
         MAX(id) AS event_id,
         MAX(deviceType) AS device_type,
         MAX(browser_type) AS browser_type,
@@ -51,18 +50,17 @@ WHERE
     (ae.event_type NOT IN ('DELIVERED', 'BOUNCE', 'SENT'))
     
     OR
-    -- Include SENT events where obsoletedBy_id is 'nan' (i.e., not obsolete) and no corresponding DROPPED event exists    (ae.event_type = 'SENT' AND ae.obsoletedBy_id = 'nan' AND NOT EXISTS (
-      (ae.event_type = 'SENT' AND ae.obsoletedBy_id = 'nan' AND NOT EXISTS (        
+    -- Include SENT events where obsoletedBy_id is 'nan'
+    (ae.event_type = 'SENT' AND ae.obsoletedBy_id = 'nan' AND NOT EXISTS (
             SELECT 1
             FROM `datapilot-datadrivenmarketing`.`hubspot_tables`.`all_events_table` dr
             WHERE dr.recipient = ae.recipient 
               AND dr.emailCampaignId = ae.campaign_id
               AND dr.type = 'DROPPED'
          ))
-    -- This condition includes SENT events only if they are not obsolete (obsoletedBy_id = 'nan') and if the event was not dropped.
 
     OR
-    -- Include DELIVERED events only if there is no corresponding BOUNCE event with the specified categories
+    -- Include DELIVERED events only if there is no corresponding BOUNCE event
     (ae.event_type = 'DELIVERED' AND NOT EXISTS (
         SELECT 1
         FROM `datapilot-datadrivenmarketing`.`hubspot_tables`.`all_events_table` br 
@@ -72,32 +70,6 @@ WHERE
           AND br.category IN ('UNKNOWN_USER', 'SPAM', 'POLICY', 'IP_REPUTATION', 'MAILBOX_FULL')
           AND br.obsoletedBy_id = 'nan'
     ))
-    -- This condition includes DELIVERED events only if there is no BOUNCE event with certain categories (e.g., spam, policy issues) associated with it.
-    
     OR
-    -- Include BOUNCE events where obsoletedBy_id is 'nan' (i.e., the event is not obsolete)
+    -- Include BOUNCE events where obsoletedBy_id is 'nan'
     (ae.event_type = 'BOUNCE' AND ae.obsoletedBy_id = 'nan')
-    -- This condition includes BOUNCE events only if they are not obsolete.
-
-
-=======
-WITH source_data AS 
-(
-  SELECT
-    CAST (emailCampaignId AS STRING) AS campaign_id,
-    `from` AS from_name,
-    recipient,
-    created AS created_at,
-    id AS event_id,
-    deviceType AS device_type,
-    type AS event_type,
-    location_country,
-    location_city,
-    location_state,
-    sentBy_created,
-    obsoletedBy_id,
-    category
-  FROM `datapilot-datadrivenmarketing`.`hubspot_tables`.`all_events_table`
-)
-SELECT * FROM source_data
->>>>>>> 881be647e43f9e83f7e678ad837b1c3e2233da6e
