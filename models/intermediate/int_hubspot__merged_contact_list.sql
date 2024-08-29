@@ -19,7 +19,7 @@ WITH contact_data AS (
 ),
 
 contact_list_data AS (
-    SELECT
+    SELECT DISTINCT
         contact_list_id,
         list_name,
         list_type,
@@ -28,14 +28,14 @@ contact_list_data AS (
 ),
 
 contact_list_membership_data AS (
-    SELECT
+    SELECT DISTINCT
         contact_list_id,
         contact_id,
         is_member
     FROM {{ ref('stg_hubspot__contacts_list_membership') }}
 )
 
-SELECT
+SELECT DISTINCT
     cd.contact_id,
     cd.full_name,
     cd.email,
