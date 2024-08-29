@@ -1,6 +1,6 @@
 WITH source_data AS 
 (
-  SELECT
+  SELECT DISTINCT
  CAST(list_id AS STRING) AS contact_list_id,
  cast(vid as string) AS contact_id,
  portal_id,
@@ -12,4 +12,3 @@ WITH source_data AS
   FROM `datapilot-datadrivenmarketing`.`hubspot_tables`.`contacts_list_memberships_table`
 )
 SELECT * FROM source_data
-
