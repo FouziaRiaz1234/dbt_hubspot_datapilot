@@ -1,12 +1,16 @@
 WITH source_data AS
-(
-    SELECT
+
+( SELECT
+    archivedInDashboard,
+    currentlyPublished,
+    ab,
     id AS email_id,
     name AS email_name,
     emailType AS email_type,
     subcategory,
     subject,
     fromName AS from_name,
+    created,
     publishedAt AS published_at,
     author,
     authorName,
@@ -28,4 +32,7 @@ WITH source_data AS
  FROM `datapilot-datadrivenmarketing`.`hubspot_tables`.`marketing_email_table`
  )
 
- SELECT * from source_data
+SELECT * from source_data
+WHERE archivedInDashboard = 'False'
+AND email_name != 'Upgrade Your Marketing Game'
+
