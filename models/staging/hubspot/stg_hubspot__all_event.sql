@@ -72,5 +72,9 @@ WHERE
     ))
     OR
     -- Include BOUNCE events where obsoletedBy_id is 'nan'
+<<<<<<< HEAD
     (ae.event_type = 'BOUNCE' AND ae.obsoletedBy_id = 'nan')
     
+=======
+    (ae.event_type = 'BOUNCE' AND ae.obsoletedBy_id = 'nan')
+>>>>>>> 6f7823b6b3728e3499c6292bf6f64ade611b909b
